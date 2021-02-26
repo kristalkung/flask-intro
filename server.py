@@ -17,8 +17,7 @@ AWESOMENESS = [
 @app.route('/')
 def start_here():
     """Home page."""
-    #<a href="http://localhost:5000/hello">hello</a>
-    return  "<!doctype html><html>Hi! This is the home page.  <a href=\"http://localhost:5000/hello\">hello</a> </html>"
+    return  "<!doctype html><html>Hi! This is the home page.  <a href=\"http://localhost:5000/hello\">click here</a> </html>"
 
 
 @app.route('/hello')
@@ -28,16 +27,33 @@ def say_hello():
     return """
     <!doctype html>
     <html>
-      <head>
+        <head>
         <title>Hi There!</title>
-      </head>
-      <body>
-        <h1>Hi There!</h1>
-        <form action="/greet">
-          What's your name? <input type="text" name="person">
-          <input type="submit" value="Submit">
-        </form>
-      </body>
+        </head>
+        <body>
+            <h1>Hi There!</h1>
+            <form action="/greet" method="GET">
+                What's your name? <input type="text" name="person">
+                \nSelect a compliment
+                \n<select name="compliment">
+                    <option name="compliment">awesome</option>
+                    <option name="compliment">terrific</option>
+                    <option name="compliment">fantastic</option>
+                    <option name="compliment">neato</option>
+                    <option name="compliment">fantabulous</option>
+                    <option name="compliment">wowza</option>
+                    <option name="compliment">oh-so-not-meh</option>
+                    <option name="compliment">brilliant</option>
+                    <option name="compliment">ducky</option>
+                    <option name="compliment">coolio</option>
+                    <option name="compliment">incredible</option>
+                    <option name="compliment">wonderful</option>
+                    <option name="compliment">smashing</option>
+                    option name="compliment">lovely</option>
+                </select>
+                <input type="submit" value="Submit">
+            </form>
+        </body>
     </html>
     """
 
@@ -48,20 +64,25 @@ def greet_person():
 
     player = request.args.get("person")
 
-    compliment = choice(AWESOMENESS)
-
-    return """
+    compliment = request.args.get("compliment")
+    
+    return f"""
     <!doctype html>
     <html>
-      <head>
-        <title>A Compliment</title>
-      </head>
-      <body>
-        Hi, {}! I think you're {}!
-      </body>
-    </html>
-    """.format(player, compliment)
+        <head>
 
+        <title>A Compliment</title>
+        </head>
+        <body>
+            Hi, {player}! I think you're {compliment}!
+        </body>
+    </html>
+    """
+
+
+@app.route('/diss')
+def diss_person():
+    pass
 
 if __name__ == '__main__':
     # debug=True gives us error messages in the browser and also "reloads"
